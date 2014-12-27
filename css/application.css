@@ -1,10 +1,6 @@
 body {
   padding: 50px 0;
 }
-#wrap {
-  width: 100%;
-  overflow: hidden;
-}
 #count {
   text-align: center;
   font-size: 24px;
@@ -26,27 +22,33 @@ body {
   margin: 0;
   padding: 0;
   display: block;
-  width: 300%;
 }
 #colors li {
-  height: 300px;
+  height: 200px;
   display: block;
 }
 @media screen and (min-width: 768px) {
-  #count {
-    opacity: 0;
-  }
   #colors {
     margin-left: 0 !important;
   }
   #colors li {
+    width: 33.33%;
     float: left;
-    width: 11.11%;
+  }
+  #count {
+    opacity: 0;
   }
 }
 @media screen and (max-width: 768px) {
-  #colors li {
-    width: 33.3333%;
+  #wrap {
+    width: 100%;
+    overflow: hidden;
+  }
+  #wrap #colors {
+    width: 150000px;
+  }
+  #wrap #colors li {
     float: left;
+    width: 100px;
   }
 }

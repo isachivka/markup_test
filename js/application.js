@@ -3,13 +3,16 @@
   var ColorsWidget;
 
   ColorsWidget = (function() {
-    var drow, drow_stats, init, l, position, r, to;
+    var drow, drow_stats, init, l, max, position, r, set_width, to;
     l = 'passive';
     position = 0;
     r = '';
+    max = 0;
     init = function() {
       return $.ajax('colors.json').done(function(data) {
         var color, _i, _len, _ref;
+        $('#colors').wrap('<div id="wrap"></div>');
+        $('#colors').before('<div id="count"></div>');
         _ref = data["colors"];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           color = _ref[_i];
@@ -17,8 +20,11 @@
             d: color
           }, '#template', '#colors', 'append');
         }
-        $('#colors').wrap('<div id="wrap"></div>');
-        $('#colors').before('<div id="count"></div>');
+        set_width();
+        $(window).on('resize', function() {
+          return set_width();
+        });
+        max = data["colors"].length;
         drow_stats(position + 1);
         $('#count').on('click', 'a', function() {
           if ($(this).hasClass('left')) {
@@ -44,15 +50,15 @@
       if (position < 0) {
         position = 0;
       }
-      if (position > 2) {
-        position = 2;
+      if (position > max - 1) {
+        position = max - 1;
       }
       if (position === 0) {
         l = 'passive';
       } else {
         l = '';
       }
-      if (position === 2) {
+      if (position === max - 1) {
         r = 'passive';
       } else {
         r = '';
@@ -62,11 +68,19 @@
       }, 200);
       return drow_stats(position + 1);
     };
+    set_width = function() {
+      if ($(document).width() < 769) {
+        return $('#colors li').css('width', $(document).width());
+      } else {
+        return $('#colors li').css('width', '');
+      }
+    };
     drow_stats = function(n) {
       return drow({
         d: n,
         l: l,
-        r: r
+        r: r,
+        max: max
       }, '#template1', '#count', 'replace');
     };
     drow = function(data, from, to, v) {
