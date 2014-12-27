@@ -16,6 +16,10 @@ ColorsWidget = ( ->
       ) for color in data["colors"]
 
       # slide width mobile
+      # в первом коммите в репозиторий
+      # сделал без этих костылей с шириной
+      # но чтобы снять ограничение на количество
+      # пришлось использовать
       set_width()
       $(window).on 'resize', () ->
         set_width()
