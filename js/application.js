@@ -3,11 +3,12 @@
   var ColorsWidget;
 
   ColorsWidget = (function() {
-    var drow, drow_stats, init, l, max, position, r, set_width, to;
+    var drow, drow_stats, init, l, max, mobile_width, position, r, set_width, to;
     l = 'passive';
     position = 0;
     r = '';
     max = 0;
+    mobile_width = 769;
     init = function() {
       return $.ajax('colors.json').done(function(data) {
         var color, _i, _len, _ref;
@@ -37,12 +38,16 @@
           return false;
         });
         $('#colors').on('swiperight', function() {
-          position -= 1;
-          return to();
+          if ($(document).width() < mobile_width) {
+            position -= 1;
+            return to();
+          }
         });
         return $('#colors').on('swipeleft', function() {
-          position += 1;
-          return to();
+          if ($(document).width() < mobile_width) {
+            position += 1;
+            return to();
+          }
         });
       });
     };
@@ -69,7 +74,7 @@
       return drow_stats(position + 1);
     };
     set_width = function() {
-      if ($(document).width() < 769) {
+      if ($(document).width() < mobile_width) {
         return $('#colors li').css('width', $(document).width());
       } else {
         return $('#colors li').css('width', '');

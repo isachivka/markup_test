@@ -3,6 +3,7 @@ ColorsWidget = ( ->
   position = 0
   r = ''
   max = 0
+  mobile_width = 769
   
   init = () ->
 
@@ -35,11 +36,13 @@ ColorsWidget = ( ->
         to()
         false
       $('#colors').on 'swiperight', () ->
-        position -= 1
-        to()
+        if $(document).width() < mobile_width
+          position -= 1
+          to()
       $('#colors').on 'swipeleft', () ->
-        position += 1
-        to()
+        if $(document).width() < mobile_width
+          position += 1
+          to()
 
   # set slider position to n
   to = (n) ->
@@ -61,7 +64,7 @@ ColorsWidget = ( ->
 
   # set elems width for mobile
   set_width = () ->
-    if $(document).width() < 769
+    if $(document).width() < mobile_width
       $('#colors li').css('width', $(document).width())
     else
       $('#colors li').css('width', '')
